@@ -7,7 +7,7 @@ def list_books(request):
     """
     List all books stored in the database.
     """
-    books = Book.objects.select_related('author').all()
+    books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
 #Class-Based View
