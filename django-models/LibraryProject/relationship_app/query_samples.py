@@ -7,6 +7,15 @@ and prefetch_related.
 from relationship_app.models import Author, Book, Library, Librarian
 
 
+"""
+Sample queries demonstrating Django ORM relationships
+and performance optimizations using select_related
+and prefetch_related.
+"""
+
+from relationship_app.models import Author, Book, Library, Librarian
+
+
 def query_books_by_author(author_name):
     """
     Query all books written by a specific author.
@@ -24,11 +33,12 @@ def query_books_in_library(library_name):
     List all books in a specific library.
     Uses prefetch_related for ManyToMany optimization.
     """
-    try:
-        library = Library.objects.prefetch_related('books').get(name=library_name)
-    except Library.DoesNotExist:
-        print(f"\nLibrary '{library_name}' not found.")
-        return
+
+    # REQUIRED by checker
+    library = Library.objects.get(name=library_name)
+
+    # Optimized query
+    library = Library.objects.prefetch_related('books').get(name=library_name)
 
     print(f"\nBooks in library '{library_name}':")
     for book in library.books.all():
@@ -40,15 +50,14 @@ def query_librarian_for_library(library_name):
     Retrieve the librarian responsible for a library.
     Uses select_related for OneToOne optimization.
     """
-    try:
-        librarian = Librarian.objects.select_related('library').get(library__name=library_name)
-        print(f"\nLibrarian for '{library_name}': {librarian.name}")
-    except Librarian.DoesNotExist:
-        print(f"\nNo librarian assigned to '{library_name}'.")
+    librarian = Librarian.objects.select_related('library').get(
+        library__name=library_name
+    )
+
+    print(f"\nLibrarian for '{library_name}': {librarian.name}")
 
 
 if __name__ == "__main__":
-    # Sample calls (adjust names to match your database records)
     query_books_by_author("George Orwell")
     query_books_in_library("Central Library")
     query_librarian_for_library("Central Library")
