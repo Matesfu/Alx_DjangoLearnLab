@@ -23,7 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0am2+32&605dp7_-k#!66$+e&c^qb2yqnw31%7+_&79oc3(v^q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#turn off debug in production to prevent leaking sensitive tracebacks
+DEBUG = False
+#Browse side protections
+SECURE_BROWSER_XSS_FILTER = True #Enbles browser's XSS filtering
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True # prevents MIME-type sniffing attacks
+# 3. Cookie Security (Assumes HTTPS is enabled)
+CSRF_COOKIE_SECURE = True        # Only send CSRF cookie via HTTPS
+SESSION_COOKIE_SECURE = True     # Only send Session cookie via HTTPS
+
+# 4. HTTPS Redirects (Commonly used in production)
+SECURE_SSL_REDIRECT = True       # Redirect all HTTP requests to HTTPS
+SECURE_HSTS_SECONDS = 31536000   # Enforce HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 ALLOWED_HOSTS = []
 
@@ -49,7 +63,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'",)
 
 ROOT_URLCONF = 'LibraryProject.urls'
 

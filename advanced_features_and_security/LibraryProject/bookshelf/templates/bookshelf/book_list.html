@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <style>
+        .book-item { border-bottom: 1px solid #ccc; padding: 10px; }
+        .permission-badge { color: green; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <h1>Library Catalog</h1>
+
+    <form method="get" action="{% url 'book_list' %}">
+        <input type="text" name="q" placeholder="Search by title..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <div class="book-container">
+        {% for book in books %}
+            <div class="book-item">
+                <h3>{{ book.title }}</h3> <p>Author: {{ book.author }}</p>
+                <p>Published: {{ book.publication_year }}</p>
+
+                {% if perms.bookshelf.can_edit %}
+                    <a href="#">Edit Book</a>
+                {% endif %}
+                
+                {% if perms.bookshelf.can_delete %}
+                    <a href="#" style="color: red;">Delete Book</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No books found.</p>
+        {% endfor %}
+    </div>
+
+    {% if perms.bookshelf.can_create %}
+        <hr>
+        <a href="{% url 'add_book' %}">Add New Book</a>
+    {% endif %}
+</body>
+</html>
