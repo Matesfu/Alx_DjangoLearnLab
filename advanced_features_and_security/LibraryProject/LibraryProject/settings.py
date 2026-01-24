@@ -38,7 +38,11 @@ SECURE_SSL_REDIRECT = True       # Redirect all HTTP requests to HTTPS
 SECURE_HSTS_SECONDS = 31536000   # Enforce HTTPS for 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-
+# PROXY HEADER (Critical for Render/AWS):
+# Because your site is likely behind a Load Balancer (Proxy), 
+# this tells Django to trust the 'X-Forwarded-Proto' header to know if 
+# the connection was originally HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = []
 
 
