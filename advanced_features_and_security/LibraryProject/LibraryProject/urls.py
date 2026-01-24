@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from bookshelf import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('books/', views.book_list, name='book_list'),
+    path('example-form/', views.form_example_view, name='form_example'),
 ]
