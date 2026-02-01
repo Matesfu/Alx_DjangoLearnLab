@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from .models import Book
 from .serializers import BookSerializer
 
@@ -13,10 +13,14 @@ class BookList(generics.ListAPIView):
         
         # 2. Look for '?title=...' in the URL
         title_filter = self.request.query_params.get('title', None)
-        
+        author_filter = self.request.query_params.get('author', None)
         # 3. If the user provided a title, narrow down the results
         if title_filter is not None:
             queryset = queryset.filter(title__icontains=title_filter)
-            
+        if author_filter is not None:
+            queryset = queryset.filter(author__icontains=author_filter)    
         return queryset
 
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
