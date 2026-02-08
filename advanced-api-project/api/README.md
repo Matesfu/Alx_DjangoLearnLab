@@ -16,3 +16,14 @@ for the Book model.
 
 ### Validation
 - Book publication year cannot be in the future.
+
+## Book API: Filtering, Searching, and Ordering
+
+The `/api/books/` endpoint supports advanced query capabilities:
+
+### 1. Filtering
+You can filter books by exact matches of specific fields:
+
+- **title**: Filter by book title.
+- **author__name**: Filter by the name of the author (follows the ForeignKey relationship).
+- **publication_year**: Filter by the year the book was published.
