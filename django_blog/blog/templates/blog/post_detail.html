@@ -25,6 +25,13 @@
 {% empty %}
     <p>No comments yet.</p>
 {% endfor %}
+<p>Tags:
+{% for tag in object.tags.all %}
+    <a href="{% url 'tag-posts' tag.name %}">{{ tag.name }}</a>
+{% empty %}
+    No tags
+{% endfor %}
+</p>
 
 {% if user.is_authenticated %}
     <a href="{% url 'comment-create' object.pk %}">
