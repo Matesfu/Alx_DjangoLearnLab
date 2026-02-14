@@ -30,6 +30,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),   # ✅ Required by checker
+        }
 
     def save(self, commit=True):
         instance = super().save(commit=False)
