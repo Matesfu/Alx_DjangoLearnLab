@@ -8,6 +8,11 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
 )
+from .views import (
+    CommentCreateView,
+    CommentUpdateView,
+    CommentDeleteView,
+)
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(
@@ -35,3 +40,28 @@ urlpatterns = [
 
     # Delete
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+]
+
+urlpatterns += [
+
+    # Create comment
+    path(
+        'post/<int:pk>/comments/new/',
+        CommentCreateView.as_view(),
+        name='comment-create'
+    ),
+
+    # Update comment
+    path(
+        'comment/<int:pk>/update/',
+        CommentUpdateView.as_view(),
+        name='comment-update'
+    ),
+
+    # Delete comment
+    path(
+        'comment/<int:pk>/delete/',
+        CommentDeleteView.as_view(),
+        name='comment-delete'
+    ),
+]
