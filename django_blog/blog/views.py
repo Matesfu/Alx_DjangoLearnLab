@@ -13,6 +13,7 @@ from django.views.generic import (
     DeleteView
 )
 from django.db.models import Q
+from taggit.models import Tag
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Comment
