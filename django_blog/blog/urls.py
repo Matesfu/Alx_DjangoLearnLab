@@ -13,7 +13,7 @@ from .views import (
     CommentUpdateView,
     CommentDeleteView,
 )
-from .views import SearchResultsView, TagPostsView
+from .views import SearchResultsView, PostByTagListView
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(
@@ -76,8 +76,8 @@ urlpatterns += [
     ),
 
     path(
-        'tags/<str:tag_name>/',
-        TagPostsView.as_view(),
-        name='tag-posts'
+        'tags/<slug:tag_slug>/',
+        PostByTagListView.as_view(),
+        name='post-by-tag'
     ),
 ]
