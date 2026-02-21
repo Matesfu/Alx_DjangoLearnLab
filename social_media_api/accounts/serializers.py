@@ -25,6 +25,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+    def validate(self, data):
+        user = authenticate(**data)
+        if not user:
+            raise serializers.ValidationError("Invalid credentials")
+        data['user'] = user
+        return data
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -32,7 +38,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     following_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = [
             'id', 'username', 'email',
             'bio', 'profile_picture',
