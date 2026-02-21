@@ -1,16 +1,18 @@
 # Social Media API
 
-A professional and robust RESTful API built with Django and Django REST Framework, designed to power modern social media applications. This project focuses on secure user authentication, interactive content sharing, and scalable architecture.
+A professional and robust RESTful API built with Django and Django REST Framework, designed to power modern social media applications. This project focuses on secure user authentication, interactive content sharing, social networking, and scalable architecture.
 
 ## 🚀 Features
 
-### User Accounts & Authentication
-- **Custom User Model**: Enhanced user profiles with bio, profile pictures, and follower/following relationships.
+### User Accounts & Social Networking
+- **Custom User Model**: Enhanced user profiles with bio, profile pictures, and intuitive follow/unfollow relationships.
+- **Following System**: Connect with other users through a robust following/followers mechanism.
 - **Token-based Authentication**: Secure user registration and login using Django REST Framework's `TokenAuthentication`.
-- **Profile Management**: Detailed user profiles with follower and following counts.
+- **Profile Management**: Detailed user profiles with real-time follower and following counts.
 
 ### Posts & Interactions
 - **Post Management**: Create, read, update, and delete posts with ease.
+- **Personalized Feed**: A dedicated activity feed showing the latest posts from users you follow.
 - **Comment System**: Interactive commenting on posts with nested visibility.
 - **Custom Permissions**: Secure access control ensuring only owners can modify their content (`IsOwnerOrReadOnly`).
 - **Advanced Filtering**: Full-text search on post titles and content.
@@ -68,6 +70,8 @@ The API will be available at `http://127.0.0.1:8000/`.
 | `register/` | POST | Register a new user and receive a token. | No |
 | `login/` | POST | Login with credentials and receive a token. | No |
 | `profile/` | GET/PATCH | Retrieve or update the authenticated user's profile. | Yes |
+| `follow/<int:user_id>/` | POST | Follow a specific user. | Yes |
+| `unfollow/<int:user_id>/` | POST | Unfollow a specific user. | Yes |
 
 ### Posts App (`/api/`)
 
@@ -75,6 +79,7 @@ The API will be available at `http://127.0.0.1:8000/`.
 | :--- | :--- | :--- | :--- |
 | `posts/` | GET/POST | List all posts (paginated/searchable) or create a new post. | Yes |
 | `posts/{id}/` | GET/PUT/PATCH/DELETE | Retrieve, update, or delete a specific post (owner only). | Yes |
+| `feed/` | GET | View a personalized activity feed from followed users. | Yes |
 | `comments/` | GET/POST | List all comments or create a new comment. | Yes |
 | `comments/{id}/` | GET/PUT/PATCH/DELETE | Retrieve, update, or delete a specific comment (owner only). | Yes |
 
@@ -86,4 +91,4 @@ python manage.py test accounts posts
 ```
 
 ---
-*Built as part of the ALX Backend curriculum.*
+
