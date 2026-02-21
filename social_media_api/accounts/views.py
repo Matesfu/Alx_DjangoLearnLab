@@ -8,6 +8,7 @@ from rest_framework import permissions
 from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer
 from .models import CustomUser
 User = get_user_model()
+from notifications.utils import create_notification
 
 
 class RegisterView(generics.CreateAPIView):
@@ -69,6 +70,12 @@ class FollowUserView(APIView):
             return Response({'detail': "You cannot follow yourself"}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.following.add(target_user)
+        #create notification for followed user
+        create_notification(
+            recipient=target_user,
+            actor=request.user,
+            verb='started following you',
+        )
         return Response({'detail': f'You are now following {target_user.username}'})
 
 

@@ -1,6 +1,6 @@
 # Social Media API
 
-A professional and robust RESTful API built with Django and Django REST Framework, designed to power modern social media applications. This project focuses on secure user authentication, interactive content sharing, social networking, and scalable architecture.
+A professional and robust RESTful API built with Django and Django REST Framework, designed to power modern social media applications. This project focuses on secure user authentication, interactive content sharing, real-time engagement, and scalable architecture.
 
 ## 🚀 Features
 
@@ -13,10 +13,15 @@ A professional and robust RESTful API built with Django and Django REST Framewor
 ### Posts & Interactions
 - **Post Management**: Create, read, update, and delete posts with ease.
 - **Personalized Feed**: A dedicated activity feed showing the latest posts from users you follow.
+- **Like/Unlike System**: Interactive content engagement with built-in duplicate prevention.
 - **Comment System**: Interactive commenting on posts with nested visibility.
 - **Custom Permissions**: Secure access control ensuring only owners can modify their content (`IsOwnerOrReadOnly`).
 - **Advanced Filtering**: Full-text search on post titles and content.
 - **Smart Pagination**: Paginated results for improved performance and user experience.
+
+### Real-time Engagement
+- **Notification System**: Instant notifications for social actions like follows, likes, and comments.
+- **Notification Center**: A dedicated endpoint for users to keep track of their interactions.
 
 ## 🛠️ Technology Stack
 
@@ -50,7 +55,7 @@ pip install django djangorestframework django-filter
 
 ### 4. Run migrations
 ```bash
-python manage.py makemigrations accounts posts
+python manage.py makemigrations accounts posts notifications
 python manage.py migrate
 ```
 
@@ -79,15 +84,23 @@ The API will be available at `http://127.0.0.1:8000/`.
 | :--- | :--- | :--- | :--- |
 | `posts/` | GET/POST | List all posts (paginated/searchable) or create a new post. | Yes |
 | `posts/{id}/` | GET/PUT/PATCH/DELETE | Retrieve, update, or delete a specific post (owner only). | Yes |
+| `posts/{id}/like/` | POST | Like a specific post. | Yes |
+| `posts/{id}/unlike/` | POST | Unlike a specific post. | Yes |
 | `feed/` | GET | View a personalized activity feed from followed users. | Yes |
 | `comments/` | GET/POST | List all comments or create a new comment. | Yes |
 | `comments/{id}/` | GET/PUT/PATCH/DELETE | Retrieve, update, or delete a specific comment (owner only). | Yes |
+
+### Notifications App (`/api/`)
+
+| Endpoint | Method | Description | Auth Required |
+| :--- | :--- | :--- | :--- |
+| `notifications/` | GET | Retrieve a list of notifications for the authenticated user. | Yes |
 
 ## 🧪 Testing
 
 To run the automated tests, execute the following command:
 ```bash
-python manage.py test accounts posts
+python manage.py test accounts posts notifications
 ```
 
 ---
