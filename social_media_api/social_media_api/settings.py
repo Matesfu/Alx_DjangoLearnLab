@@ -86,8 +86,16 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 
 import dj_database_url
 
+db_config = dj_database_url.config(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+    'default': {
+        'ENGINE': db_config.get('ENGINE'),
+        'NAME': db_config.get('NAME'),
+        'USER': db_config.get('USER'),
+        'PASSWORD': db_config.get('PASSWORD'),
+        'HOST': db_config.get('HOST'),
+        'PORT': db_config.get('PORT'),
+    }
 }
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
