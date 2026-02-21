@@ -63,12 +63,11 @@ class LikePostView(APIView):
 
         # Create notification for post author
         if post.author != request.user:
-            Notification.objects.create(
+            create_notification(
                 recipient=post.author,
                 actor=request.user,
                 verb='liked your post',
-                target_object_id=post.id,
-                target_content_type=post._meta.model_name
+                target=post
             )
 
         return Response({'detail': 'Post liked'}, status=status.HTTP_201_CREATED)

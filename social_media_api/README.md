@@ -96,6 +96,26 @@ The API will be available at `http://127.0.0.1:8000/`.
 | :--- | :--- | :--- | :--- |
 | `notifications/` | GET | Retrieve a list of notifications for the authenticated user. | Yes |
 
+## 🚀 Deployment
+
+This project is configured for deployment on platforms like Heroku, AWS, or DigitalOcean.
+
+### Production Environment Variables
+Create a `.env` file in the root directory and configure the following:
+- `DEBUG`: Set to `False`.
+- `SECRET_KEY`: A secure random string.
+- `ALLOWED_HOSTS`: A comma-separated list of your production domains.
+- `DATABASE_URL`: Your production database connection string (e.g., PostgreSQL).
+
+### Static Files
+The project uses **WhiteNoise** to serve static files efficiently in production. Run the following before deploying:
+```bash
+python manage.py collectstatic
+```
+
+### Web Server
+**Gunicorn** is included as the production WSGI server. The `Procfile` is already configured for easy deployment.
+
 ## 🧪 Testing
 
 To run the automated tests, execute the following command:

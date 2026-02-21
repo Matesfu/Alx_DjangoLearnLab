@@ -1,10 +1,10 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from rest_framework import permissions
 from .serializers import RegisterSerializer, LoginSerializer, UserProfileSerializer
 from .models import CustomUser
 User = get_user_model()

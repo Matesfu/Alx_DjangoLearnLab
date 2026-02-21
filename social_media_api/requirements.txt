@@ -1,0 +1,9 @@
+django>=5.0
+djangorestframework
+django-filter
+django-environ
+gunicorn
+whitenoise
+dj-database-url
+psycopg2-binary
+pillow
